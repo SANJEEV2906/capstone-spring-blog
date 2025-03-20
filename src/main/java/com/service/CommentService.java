@@ -13,20 +13,25 @@ import com.exception.ResourceNotFoundException;
 import com.repository.BlogRepository;
 import com.repository.CommentRepository;
 
-@Service
+@Service //Marks a class as a service component.
 public class CommentService {
 
-    
-    
-    private final CommentRepository commentRepository;
-    
-    public CommentService(CommentRepository commentRepository) {
-    	this.commentRepository=commentRepository;
+
+	private final CommentRepository commentRepository;
+    private final BlogRepository blogRepository;
+
+    public CommentService(CommentRepository commentRepository, BlogRepository blogRepository) {
+        this.commentRepository = commentRepository;
+        this.blogRepository = blogRepository;
     }
     
-    @Autowired
-    private BlogRepository blogRepository;
-
+    /**
+     * Adds a new comment to a blog post.
+     * @param blogId The ID of the blog post.
+     * @param commentDto The comment details.
+     * @return The created comment.
+     * @throws ResourceNotFoundException if the blog is not found.
+     */
     public CommentDto addComment(Long blogId, CommentDto commentDto) throws ResourceNotFoundException {
         Blog blog = blogRepository.findById(blogId)
                 .orElseThrow(() -> new ResourceNotFoundException("Blog not found"));
@@ -38,8 +43,6 @@ public class CommentService {
         Comment savedComment = commentRepository.save(comment);
         return mapToDto(savedComment);
     }
-
-    // Helper method to map Entity to DTO
     private CommentDto mapToDto(Comment comment) {
         CommentDto dto = new CommentDto();
         dto.setId(comment.getId());
@@ -49,7 +52,12 @@ public class CommentService {
     }
     
     
-    
+    /**
+     * Retrieves all comments for a given blog post.
+     * @param blogId The ID of the blog post.
+     * @return A list of comments for the blog.
+     * @throws ResourceNotFoundException if the blog is not found.
+     */
     public List<CommentDto> getCommentsByBlogId(Long id) throws ResourceNotFoundException {
         if (!commentRepository.existsById(id)) {
             throw new ResourceNotFoundException("Blog not found");
@@ -61,6 +69,12 @@ public class CommentService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Deletes a comment by its ID.
+     * @param id The comment ID.
+     * @return A confirmation message.
+     * @throws ResourceNotFoundException if the comment is not found.
+     */
     public String deleteComment(Long id) throws ResourceNotFoundException {
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Comment not found"));

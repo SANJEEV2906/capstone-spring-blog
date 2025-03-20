@@ -32,7 +32,7 @@ public class Blog {
     private String content;
 
     @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference  // Manages the parent-child relationship
+    @JsonManagedReference  //to prevent from infinite recursion
     private List<Comment> comments;
     
     

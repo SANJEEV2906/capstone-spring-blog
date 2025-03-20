@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 /**
  * Service class for managing blog operations.
  */
-@Service
+@Service  //Marks a class as a service component.
 public class BlogService {
     
 	@Autowired
@@ -27,6 +27,11 @@ public class BlogService {
     	this.blogRepository=blogRepository;
     }*/
 
+	/**
+     * Creates a new blog post.
+     * @param blogDto The blog details.
+     * @return The created blog with its assigned ID.
+     */
     public BlogDto createBlog(BlogDto blogDto) {
         Blog blog = new Blog();
         blog.setTitle(blogDto.getTitle());
@@ -36,7 +41,13 @@ public class BlogService {
         blogDto.setId(savedBlog.getId());
         return blogDto;
     }
-
+    
+    /**
+     * Retrieves a blog post by its ID.
+     * @param id The ID of the blog post.
+     * @return The blog details.
+     * @throws ResourceNotFoundException if the blog is not found.
+     */
     public BlogDto getBlogById(Long id) throws ResourceNotFoundException {
         Blog blog = blogRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Blog not found"));
@@ -59,7 +70,14 @@ public class BlogService {
         blogDto.setId(updatedBlog.getId());
         return blogDto;
     }
-
+    
+    /**
+     * Updates an existing blog post.
+     * @param id The ID of the blog post to update.
+     * @param blogDto The new blog details.
+     * @return The updated blog details.
+     * @throws ResourceNotFoundException if the blog is not found.
+     */
     public String deleteBlog(Long id) throws ResourceNotFoundException {
         Blog blog = blogRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Blog not found"));

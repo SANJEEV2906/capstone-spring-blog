@@ -1,14 +1,11 @@
 package com.repository;
 
-import com.dto.CommentDto;
+
 import com.entity.Comment;
-
-import java.util.Collection;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Repository  //Marks an interface as a repository component.
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
 	

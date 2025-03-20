@@ -16,24 +16,38 @@ import com.dto.CommentDto;
 import com.exception.ResourceNotFoundException;
 import com.service.CommentService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/comment")
+@RequestMapping("/api/blogs/comment")
 public class CommentController {
 	
-	
-
 	@Autowired
     private CommentService commentService;
 	
+	/**
+	 * Adds a new comment to a blog post.
+	 * @param commentDto The comment details.
+	 * @return The created comment.
+	 * @throws ResourceNotFoundException if the blog post is not found.
+	 */
+	
 	@PostMapping
+	@Tag(name="Add the Comment")
     public ResponseEntity<CommentDto> addComment(@Valid @RequestBody CommentDto commentDto) throws ResourceNotFoundException {
         CommentDto createdComment = commentService.addComment(commentDto.getBlogId(), commentDto);
         return ResponseEntity.ok(createdComment);
     }
 	
+	/**
+	 * Retrieves all comments for a specific blog post.
+	 * @param blogId The ID of the blog post.
+	 * @return A list of comments for the given blog.
+	 * @throws ResourceNotFoundException if no comments are found for the blog ID.
+	 */
 	@GetMapping("/blog/{blogId}")
+	@Tag(name="Get comment based on the blog id")
     public ResponseEntity<List<CommentDto>> getCommentsByBlogId(@PathVariable Long blogId) throws ResourceNotFoundException {
         return ResponseEntity.ok(commentService.getCommentsByBlogId(blogId));
     }
@@ -45,6 +59,7 @@ public class CommentController {
      * @throws ResourceNotFoundException if the comment is not found.
      */
     @DeleteMapping("/{id}")
+    @Tag(name="Delete a comment by its id")
     public ResponseEntity<String> deleteComment(@PathVariable Long id) throws ResourceNotFoundException {
         String response = commentService.deleteComment(id);
         return ResponseEntity.ok(response);

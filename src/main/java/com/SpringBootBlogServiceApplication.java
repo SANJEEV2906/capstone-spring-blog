@@ -13,7 +13,6 @@ import io.swagger.v3.oas.annotations.info.Info;
  * 
  * API Documentation:
  * - Swagger UI: Accessible at /swagger-ui.html (if enabled)
- * - OpenAPI JSON: Accessible at /v3/api-docs
  */
 
 //Improve API Documentation with Swagger
