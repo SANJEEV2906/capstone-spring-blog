@@ -2,6 +2,7 @@ package com.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,38 +21,63 @@ import com.service.BlogService;
 
 import jakarta.validation.Valid;
 
+/**
+ * REST controller for managing blogs.
+ */
 @RestController
 @RequestMapping("/api/blogs")
 public class BlogController {
     @Autowired
     private BlogService blogService;
     
-    
-    //To create a new Blog
+    /**
+     * Creates a new blog.
+     * @param blogDto The blog data.
+     * @return The created blog.
+     */
     @PostMapping
     public ResponseEntity<BlogDto> createBlog(@Valid @RequestBody BlogDto blogDto) {
         return ResponseEntity.status(201).body(blogService.createBlog(blogDto));
     }
     
-    //To get the Blog based on given Id
+    /**
+     * Retrieves a blog by its ID.
+     * @param id The blog ID.
+     * @return The blog details.
+     * @throws ResourceNotFoundException if the blog is not found.
+     */
     @GetMapping("/{id}")
-    public ResponseEntity<BlogDto> getBlogById(@PathVariable Long id) throws ResourceNotFoundException{ //throws ResourceNotFoundException {
+    public ResponseEntity<BlogDto> getBlogById(@PathVariable Long id) throws ResourceNotFoundException{ 
         return ResponseEntity.ok(blogService.getBlogById(id));
     }
     
-    //Update the blog based on id
+    /**
+     * Updates an existing blog.
+     * @param id The blog ID.
+     * @param blogDto The updated blog data.
+     * @return The updated blog.
+     * @throws ResourceNotFoundException if the blog is not found.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<BlogDto> updateBlog(@PathVariable Long id, @Valid @RequestBody BlogDto blogDto) throws ResourceNotFoundException {
         return ResponseEntity.ok(blogService.updateBlog(id, blogDto));
     }
     
-    //Delete the blog based on Id
+    /**
+     * Deletes a blog by its ID.
+     * @param id The blog ID.
+     * @return A confirmation message.
+     * @throws ResourceNotFoundException if the blog is not found.
+     */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> deleteBlog(@PathVariable Long id) throws ResourceNotFoundException {
+    public ResponseEntity<String> deleteBlog(@PathVariable Long id) throws ResourceNotFoundException {
         return ResponseEntity.ok(blogService.deleteBlog(id));
     }
     
-    //To get all the blogs
+    /**
+     * Retrieves all blogs.
+     * @return A list of all blogs.
+     */
     @GetMapping("/all")
     public ResponseEntity<List<Blog>> getAllBlogs() {
         List<Blog> blogs = blogService.findAll();

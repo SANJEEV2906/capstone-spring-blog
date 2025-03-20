@@ -14,10 +14,18 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Service class for managing blog operations.
+ */
 @Service
 public class BlogService {
-    @Autowired
+    
+	@Autowired
     private BlogRepository blogRepository;
+    
+    /*public BlogService(BlogRepository blogRepository) {
+    	this.blogRepository=blogRepository;
+    }*/
 
     public BlogDto createBlog(BlogDto blogDto) {
         Blog blog = new Blog();
@@ -52,12 +60,12 @@ public class BlogService {
         return blogDto;
     }
 
-    public boolean deleteBlog(Long id) throws ResourceNotFoundException {
+    public String deleteBlog(Long id) throws ResourceNotFoundException {
         Blog blog = blogRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Blog not found"));
 
         blogRepository.delete(blog);
-        return true;
+        return "Blog has been Deleted";
     }
     
     

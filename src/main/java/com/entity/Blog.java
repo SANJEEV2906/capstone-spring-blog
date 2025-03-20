@@ -1,7 +1,9 @@
 package com.entity;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -13,6 +15,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "blogs")
@@ -29,7 +33,9 @@ public class Blog {
 
     @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference  // Manages the parent-child relationship
-    private List<Comment> comments=new ArrayList<>();
+    private List<Comment> comments;
+    
+    
 
     // Getters and Setters
     public Long getId() { 
@@ -59,20 +65,28 @@ public class Blog {
     public void setComments(List<Comment> comments) { 
     	this.comments = comments; 
     }
-	public Blog(String title, String content, List<Comment> comments) {
+	public Blog(String title, String content, List<Comment> comments ) {
 		super();
 		this.title = title;
 		this.content = content;
 		this.comments = comments;
+		
 	}
 	public Blog() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 	@Override
 	public String toString() {
-		return "Blog [title=" + title + ", content=" + content + ", comments=" + comments + "]";
+		return "Blog [id=" + id + ", title=" + title + ", content=" + content + ", comments=" + comments
+				+ "]";
 	}
+	
+	
+	
+	
+	
     
     
 }

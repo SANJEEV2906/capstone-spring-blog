@@ -6,6 +6,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 
+/**
+ * Entry point for the Spring Boot Blog Service application.
+ * 
+ * This application provides a RESTful API for managing blogs and comments.
+ * 
+ * API Documentation:
+ * - Swagger UI: Accessible at /swagger-ui.html (if enabled)
+ * - OpenAPI JSON: Accessible at /v3/api-docs
+ */
+
 //Improve API Documentation with Swagger
 
 @OpenAPIDefinition(info = @Info(title = "Blog API", version = "1.0", description = "Spring Boot REST API for Blog Management"))

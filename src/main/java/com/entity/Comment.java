@@ -1,7 +1,5 @@
 package com.entity;
 
-import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -25,10 +23,10 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "blog_id", nullable = false)
-    @JsonIgnore  // Prevents circular reference
+    @JsonIgnore
     private Blog blog;
     
-    private LocalDateTime createdAt;
+    
 
     // Getters and Setters
     public Long getId() { 
@@ -56,7 +54,7 @@ public class Comment {
 		this.id = id;
 		this.comment = comment;
 		this.blog = blog;
-		this.createdAt=createdAt;
+		
 	}
 	public Comment() {
 		super();
@@ -72,14 +70,10 @@ public class Comment {
 		
 	}
 	
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt=createdAt;
-		// TODO Auto-generated method stub
-		
-	}
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
+	
+	
+	
+	
 	
 }
 
