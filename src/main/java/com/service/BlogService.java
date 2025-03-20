@@ -1,18 +1,15 @@
 package com.service;
 
-import com.dto.BlogDto;
-
-import com.entity.Blog;
-
-import com.exception.ResourceNotFoundException;
-import com.repository.BlogRepository;
-import com.repository.CommentRepository;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import com.dto.BlogDto;
+import com.entity.Blog;
+import com.exception.InvalidIdException;
+import com.exception.ResourceNotFoundException;
+import com.repository.BlogRepository;
 
 /**
  * Service class for managing blog operations.
@@ -49,6 +46,10 @@ public class BlogService {
      * @throws ResourceNotFoundException if the blog is not found.
      */
     public BlogDto getBlogById(Long id) throws ResourceNotFoundException {
+    	
+    	if (id <= 0) {
+            throw new InvalidIdException("ID must be positive");
+        }
         Blog blog = blogRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Blog not found"));
         
@@ -59,7 +60,10 @@ public class BlogService {
         return blogDto;
     }
 
-    public BlogDto updateBlog(Long id, BlogDto blogDto) throws ResourceNotFoundException {
+
+    
+
+	public BlogDto updateBlog(Long id, BlogDto blogDto) throws ResourceNotFoundException {
         Blog blog = blogRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Blog not found"));
 
