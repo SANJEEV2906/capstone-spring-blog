@@ -62,7 +62,13 @@ public class BlogService {
 
 
     
-
+    /**
+     * Updates an existing blog post.
+     * @param id The ID of the blog post to update.
+     * @param blogDto The new blog details.
+     * @return The updated blog details.
+     * @throws ResourceNotFoundException if the blog is not found.
+     */
 	public BlogDto updateBlog(Long id, BlogDto blogDto) throws ResourceNotFoundException {
         Blog blog = blogRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Blog not found"));
@@ -75,13 +81,12 @@ public class BlogService {
         return blogDto;
     }
     
-    /**
-     * Updates an existing blog post.
-     * @param id The ID of the blog post to update.
-     * @param blogDto The new blog details.
-     * @return The updated blog details.
-     * @throws ResourceNotFoundException if the blog is not found.
-     */
+	/**
+	 * Deletes a blog by its ID.
+	 * @param id The ID of the blog to delete.
+	 * @return A confirmation message stating the blog has been deleted.
+	 * @throws ResourceNotFoundException If the blog with the given ID is not found.
+	 */
     public String deleteBlog(Long id) throws ResourceNotFoundException {
         Blog blog = blogRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Blog not found"));
@@ -90,7 +95,10 @@ public class BlogService {
         return "Blog has been Deleted";
     }
     
-    
+    /**
+     * Retrieves all blogs from the database.
+     * @return A list of all available blogs.
+     */
     public List<Blog> findAll() {
         return blogRepository.findAll();
     }
